@@ -7,13 +7,17 @@ const awesomebooks = [{
   author: 'Tanebom',
 },
 ];
+
+// just display array
 console.log(awesomebooks);
+
 const awesomebookcontainer = document.querySelector('.awesome-book');
+
 const div = document.createElement('div');
 div.className = 'book-list';
 awesomebookcontainer.appendChild(div);
 for (let x = 0; x < awesomebooks.length; x++) {
-  const eachbook = document.createElement('form');
+  const eachbook = document.createElement('div');
   eachbook.className = 'each-book';
   div.appendChild(eachbook);
   const p1 = document.createElement('p');
@@ -40,11 +44,11 @@ for (let x = 0; x < awesomebooks.length; x++) {
   });
 }
 
+// Add new book
 const newdiv = document.createElement('div');
 newdiv.className = 'add-new-book';
 awesomebookcontainer.appendChild(newdiv);
-const form = document.createElement('form');
-form.method = 'POST';
+const form = document.createElement('div');
 newdiv.appendChild(form);
 const txt1 = document.createElement('input');
 txt1.id = 'title';
@@ -70,6 +74,7 @@ form.appendChild(br4);
 
 const error = document.createElement('div');
 error.className = 'error';
+error.innerHTML = 'error goes here';
 form.appendChild(error);
 
 const addbtn = document.createElement('button');
@@ -81,12 +86,12 @@ addbtn.addEventListener('click', () => {
   const titval = tit.value;
   const auth = document.getElementById('author');
   const authval = auth.value;
-  if (!titval.empty) {
+  if (titval !== '' || authval !== '') {
     awesomebooks.push(awesomebooks.title = titval, awesomebooks.author = authval);
     console.log(awesomebooks);
-  } else {
+  }
+  else {
     const diserror = document.querySelector('.error');
     diserror.innerHTML = 'Title or Text filed can"t be empty';
-    form.appendChild(diserror);
   }
 });
