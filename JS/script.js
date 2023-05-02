@@ -9,14 +9,13 @@ const awesomebooks = [{
 ];
 
 // just display array
-console.log(awesomebooks);
 
 const awesomebookcontainer = document.querySelector('.awesome-book');
 
 const div = document.createElement('div');
 div.className = 'book-list';
 awesomebookcontainer.appendChild(div);
-for (let x = 0; x < awesomebooks.length; x++) {
+for (let x = 0; x < awesomebooks.length; x += 1) {
   const eachbook = document.createElement('div');
   eachbook.className = 'each-book';
   div.appendChild(eachbook);
@@ -95,3 +94,4 @@ addbtn.addEventListener('click', () => {
     diserror.innerHTML = 'Title or Text filed can"t be empty';
   }
 });
+console.log(awesomebooks);
