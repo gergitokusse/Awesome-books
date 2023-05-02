@@ -1,53 +1,47 @@
-const awesomebooks = [{
-  title: 'Java Programing',
-  author: 'auther 1',
-},
-{
-  title: 'fundamental of programming',
-  author: 'Tanebom',
-},
-];
-
 // just display array
-
 const awesomebookcontainer = document.querySelector('.awesome-book');
 
 const div = document.createElement('div');
 div.className = 'book-list';
 awesomebookcontainer.appendChild(div);
-for (let x = 0; x < awesomebooks.length; x += 1) {
-  const eachbook = document.createElement('div');
-  eachbook.className = 'each-book';
-  div.appendChild(eachbook);
-  const p1 = document.createElement('p');
-  p1.innerHTML = awesomebooks[x].title;
-  eachbook.appendChild(p1);
+// parc data from local storage
+const storage = JSON.parse(localStorage.getItem('Awesome_Books'));
 
-  const p2 = document.createElement('p');
-  p2.innerHTML = awesomebooks[x].author;
-  eachbook.appendChild(p2);
+if (storage !== null) {
+  for (let x = 0; x < storage.length; x += 1) {
+    const eachbook = document.createElement('form');
+    eachbook.className = 'each-book';
+    div.appendChild(eachbook);
+    const p1 = document.createElement('p');
+    p1.innerHTML = storage[x].title;
+    eachbook.appendChild(p1);
 
-  // remove button
-  const btn = document.createElement('button');
-  btn.id = x;
-  btn.innerHTML = 'Remove';
-  eachbook.appendChild(btn);
+    const p2 = document.createElement('p');
+    p2.innerHTML = storage[x].author;
+    eachbook.appendChild(p2);
 
-  const hr = document.createElement('hr');
-  eachbook.appendChild(hr);
+    // remove button
+    const btn = document.createElement('button');
+    btn.id = x;
+    btn.innerHTML = 'Remove';
+    eachbook.appendChild(btn);
 
-  btn.addEventListener('click', () => {
-    alert(awesomebooks[x].title);
-    awesomebooks.splice(x, 1);
-    console.log(awesomebooks);
-  });
+    const hr = document.createElement('hr');
+    eachbook.appendChild(hr);
+
+    btn.addEventListener('click', () => {
+      const Exitlocal = JSON.parse(localStorage.getItem('Awesome_Books'));
+      Exitlocal.splice(x, 1);
+      localStorage.setItem('Awesome_Books', JSON.stringify(Exitlocal));
+    });
+  }
 }
 
 // Add new book
 const newdiv = document.createElement('div');
 newdiv.className = 'add-new-book';
 awesomebookcontainer.appendChild(newdiv);
-const form = document.createElement('div');
+const form = document.createElement('form');
 newdiv.appendChild(form);
 const txt1 = document.createElement('input');
 txt1.id = 'title';
@@ -73,7 +67,6 @@ form.appendChild(br4);
 
 const error = document.createElement('div');
 error.className = 'error';
-error.innerHTML = 'error goes here';
 form.appendChild(error);
 
 const addbtn = document.createElement('button');
@@ -86,12 +79,17 @@ addbtn.addEventListener('click', () => {
   const auth = document.getElementById('author');
   const authval = auth.value;
   if (titval !== '' || authval !== '') {
-    awesomebooks.push(awesomebooks.title = titval, awesomebooks.author = authval);
-    console.log(awesomebooks);
-  }
-  else {
+    const localcontect = localStorage.getItem('Awesome_Books');
+    let bookList;
+    if (localcontect === null) {
+      bookList = [];
+    } else {
+      bookList = JSON.parse(localcontect);
+    }
+    bookList.push({ title: titval, author: authval });
+    localStorage.setItem('Awesome_Books', JSON.stringify(bookList));
+  } else {
     const diserror = document.querySelector('.error');
-    diserror.innerHTML = 'Title or Text filed can"t be empty';
+    diserror.innerHTML = 'Title or Auther can"t be empty';
   }
 });
-console.log(awesomebooks);
